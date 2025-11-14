@@ -1,0 +1,11 @@
+{
+  "type": "magicscript:magic_script_book",
+  "category": "misc",
+  "ingredients": [
+    { "item": "minecraft:writable_book" },
+    { "item": "minecraft:amethyst_shard" }
+  ],
+  "result": {
+    "item": "magicscript:magic_scriptbook"
+  }
+}

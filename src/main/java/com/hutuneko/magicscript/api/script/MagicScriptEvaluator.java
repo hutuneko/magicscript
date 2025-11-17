@@ -1,8 +1,7 @@
-package com.hutuneko.magicscript;
+package com.hutuneko.magicscript.api.script;
 
 import com.hutuneko.magicscript.antlr4.*;
-import org.antlr.v4.runtime.*;
-import org.antlr.v4.runtime.tree.*;
+import com.hutuneko.magicscript.api.MagicPos;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -43,4 +42,21 @@ public class MagicScriptEvaluator extends MagicScriptBaseVisitor<Object> {
         }
         return visitChildren(ctx);
     }
+    @Override
+    public Object visitPropertyAccessExpr(MagicScriptParser.PropertyAccessExprContext ctx) {
+        Object obj = visit(ctx.expression());
+        String field = ctx.Identifier().getText();
+
+        if (obj instanceof MagicPos p) {
+            return switch (field) {
+                case "x" -> p.x;
+                case "y" -> p.y;
+                case "z" -> p.z;
+                default -> throw new RuntimeException("Unknown field " + field);
+            };
+        }
+
+        throw new RuntimeException("Field access on non-pos object");
+    }
+
 }

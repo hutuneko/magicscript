@@ -11,22 +11,34 @@ import java.util.*;
 
 public class MagicScriptAPI {
     public static String pageJson(ItemStack stack){
-        // MagicScriptBook を読み取れるように追加
         if (stack.getItem() == MagicItems.MAGIC_SCRIPTBOOK.get()
                 || stack.getItem() == Items.WRITABLE_BOOK
                 || stack.getItem() == Items.WRITTEN_BOOK) {
 
             ListTag pages = stack.getOrCreateTag().getList("pages", Tag.TAG_STRING);
             List<String> stringList = new ArrayList<>();
+
             for (int i = 0; i < pages.size(); i++) {
                 String jsonPage = pages.getString(i);
-                String page = String.valueOf(Component.Serializer.fromJson(jsonPage));
+
+                // JSON → Component に戻す
+                Component component = Component.Serializer.fromJson(jsonPage);
+
+                // Component → 純粋な文字列に
+                String page = null;
+                if (component != null) {
+                    page = component.getString();
+                }
+
                 stringList.add(page);
             }
-            return stringList.toString();
+
+            return String.join("\n---\n", stringList); // 複数ページの場合など
         }
+
         return null;
     }
+
     public static String page(ItemStack stack) {
 
         if (stack.getItem() == MagicItems.MAGIC_SCRIPTBOOK.get()

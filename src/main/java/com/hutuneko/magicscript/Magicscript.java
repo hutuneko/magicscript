@@ -4,7 +4,7 @@ import com.hutuneko.magicscript.api.item.recipe.ModRecipes;
 import com.hutuneko.magicscript.api.magic.MagicAPIRegistry;
 import com.hutuneko.magicscript.api.magic.MagicScriptRegistry;
 import com.hutuneko.magicscript.item.MagicItems;
-import com.hutuneko.magicscript.magics.FireballFunction;
+import net.minecraft.world.entity.LightningBolt;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;

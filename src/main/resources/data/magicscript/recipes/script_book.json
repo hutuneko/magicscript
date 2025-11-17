@@ -2,7 +2,7 @@
   "type": "magicscript:magic_script_book",
   "category": "misc",
   "ingredients": [
-    { "item": "minecraft:writable_book" },
+    { "item": "minecraft:written_book" },
     { "item": "minecraft:amethyst_shard" }
   ],
   "result": {

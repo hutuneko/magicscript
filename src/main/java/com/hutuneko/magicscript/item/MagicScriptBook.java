@@ -23,13 +23,13 @@ public class MagicScriptBook extends WrittenBookItem {
             if (!player.level().isClientSide()){
                 ServerPlayer sp = (ServerPlayer) player;
 
-                String script = MagicScriptAPI.page(stack);
+                String script = MagicScriptAPI.pageJson(stack);
                 if (script == null || script.isEmpty()) {
                     player.displayClientMessage(Component.literal("スクリプトが書かれていません"), true);
                     return InteractionResultHolder.fail(stack);
                 }
-
-                MagicScriptEngine.run(sp, script);
+                System.out.println(script);
+                MagicScriptEngine.execute(sp, script);
             }
         }else {
             super.use(level,player,hand);

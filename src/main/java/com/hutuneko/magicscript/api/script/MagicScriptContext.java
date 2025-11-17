@@ -22,4 +22,7 @@ public class MagicScriptContext {
             throw new RuntimeException("Undefined variable: " + name);
         return variables.get(name);
     }
+    public boolean contains(String name) {
+        return variables.containsKey(name);
+    }
 }

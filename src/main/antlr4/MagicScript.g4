@@ -35,7 +35,7 @@ functionCall
     ;
 
 argumentList
-    : expression (',' expression)*
+    : expr+=expression (',' expr+=expression)*
     ;
 
 ifStatement
@@ -76,16 +76,19 @@ tryCatch
     ;
 
 expression
-    : expression op=('*'|'/') expression           # MulDivExpr
-    | expression op=('+'|'-') expression           # AddSubExpr
-    | expression op=('<'|'>'|'<='|'>='|'=='|'!=') expression  # CompareExpr
-    | '-' expression                               # UnaryMinusExpr
-    | '!' expression                               # NotExpr
-    | functionCall                                 # FuncCallExpr
-    | posLiteral                                   # PosLiteralExpr
-    | '(' expression ')'                           # ParenExpr
-    | literal                                      # LiteralExpr
-    | Identifier                                   # IdentifierExpr
+    : MINUS expression                                # UnaryMinusExpr
+    | expression op=(STAR|SLASH) expression           # MulDivExpr
+    | expression op=(PLUS|MINUS) expression           # AddSubExpr
+    | expression op=(LT|GT|LE|GE|EQ|NEQ) expression   # CompareExpr
+    | expression AND expression                       # LogicAndExpr
+    | expression OR expression                        # LogicOrExpr
+    | expression DOT Identifier                       # PropertyAccessExpr
+    | NOT expression                                  # NotExpr
+    | functionCall                                    # FuncCallExpr
+    | posLiteral                                      # PosLiteralExpr
+    | LPAREN expression RPAREN                        # ParenExpr
+    | literal                                         # LiteralExpr
+    | Identifier                                      # IdentifierExpr
     ;
 
 type
@@ -106,42 +109,47 @@ literal
     ;
 
 posLiteral
-    : '(' Number ',' Number ',' Number ')'
+    : 'pos' LPAREN expression COMMA expression COMMA expression RPAREN
     ;
 
+WS : [ \t\r\n]+ -> skip ;
+LINE_COMMENT : '//' ~[\r\n]* -> skip ;
+BLOCK_COMMENT : '/*' .*? '*/' -> skip ;
+
+PLUS    : '+';
+MINUS   : '-';
+STAR    : '*';
+SLASH   : '/';
+
+LE      : '<=';
+GE      : '>=';
+EQ      : '==';
+NEQ     : '!=';
+LT      : '<';
+GT      : '>';
+
+AND     : '&&';
+OR      : '||';
+NOT     : '!';
+
+DOT     : '.';
+LPAREN  : '(';
+RPAREN  : ')';
+LBRACE  : '{';
+RBRACE  : '}';
+COMMA   : ',';
+SEMI    : ';';
+
+BooleanLiteral : 'true' | 'false';
+StringLiteral  : '"' (~["\\] | '\\' .)* '"';
+
 Identifier
-    : Letter (Letter | Digit | '_')*
+    : (Letter | '_') (Letter | Digit | '_')*
     ;
 
 Number
     : Digit+ ('.' Digit+)?
     ;
 
-StringLiteral
-    : '"' (~["\\] | '\\' .)* '"'
-    ;
-
-BooleanLiteral
-    : 'true'
-    | 'false'
-    ;
-
-fragment Letter
-    : [a-zA-Z]
-    ;
-
-fragment Digit
-    : [0-9]
-    ;
-
-WS
-    : [ \t\r\n]+ -> skip
-    ;
-
-LINE_COMMENT
-    : '//' ~[\r\n]* -> skip
-    ;
-
-BLOCK_COMMENT
-    : '/*' .*? '*/' -> skip
-    ;
+fragment Letter : [a-zA-Z] ;
+fragment Digit  : [0-9] ;

@@ -2,6 +2,8 @@ package com.hutuneko.magicscript.api.item.recipe;
 
 import com.hutuneko.magicscript.item.MagicItems;
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
@@ -25,7 +27,7 @@ public class MagicScriptBookRecipe implements CraftingRecipe {
         for (int i = 0; i < inv.getContainerSize(); i++) {
             ItemStack stack = inv.getItem(i);
 
-            if (stack.is(Items.WRITABLE_BOOK)) {
+            if (stack.is(Items.WRITTEN_BOOK)) {
                 foundBook = true;
             } else if (stack.is(Items.AMETHYST_SHARD)) {
                 foundCatalyst = true;
@@ -42,7 +44,7 @@ public class MagicScriptBookRecipe implements CraftingRecipe {
         for (int i = 0; i < inv.getContainerSize(); i++) {
             ItemStack stack = inv.getItem(i);
 
-            if (stack.is(Items.WRITABLE_BOOK)) {
+            if (stack.is(Items.WRITTEN_BOOK)) {
                 book = stack;
                 break;
             }
@@ -55,7 +57,10 @@ public class MagicScriptBookRecipe implements CraftingRecipe {
         // NBTコピー
         if (book.hasTag()) {
             if (book.getTag() != null) {
-                result.setTag(book.getTag().copy());
+//                String json = Component.Serializer.toJson(Component.literal(book.getTag().get("pages").toString()));
+//                System.out.println(json);
+                CompoundTag tag = book.getTag();
+                result.setTag(tag);
             }
         }
 

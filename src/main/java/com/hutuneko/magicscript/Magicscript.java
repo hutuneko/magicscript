@@ -1,10 +1,11 @@
 package com.hutuneko.magicscript;
 
 import com.hutuneko.magicscript.api.item.recipe.ModRecipes;
-import com.hutuneko.magicscript.api.magic.MagicAPIRegistry;
 import com.hutuneko.magicscript.api.magic.MagicScriptRegistry;
+import com.hutuneko.magicscript.block.ModBlockEntities;
+import com.hutuneko.magicscript.block.ModBlocks;
+import com.hutuneko.magicscript.block.gui.ModMenus;
 import com.hutuneko.magicscript.item.MagicItems;
-import net.minecraft.world.entity.LightningBolt;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -21,6 +22,9 @@ public class Magicscript {
         MagicItems.ITEMS.register(modEventBus);
         ModRecipes.SERIALIZERS.register(modEventBus);
         modEventBus.addListener(this::commonSetup);
+        ModBlocks.BLOCKS.register(modEventBus);
+        ModBlockEntities.BLOCK_ENTITIES.register(modEventBus);
+        ModMenus.REGISTRY.register(modEventBus);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {

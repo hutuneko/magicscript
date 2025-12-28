@@ -1,9 +1,8 @@
 package com.hutuneko.magicscript.api.item.recipe;
 
-import com.hutuneko.magicscript.item.MagicItems;
+import com.hutuneko.magicscript.registy.MagicItems;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;

@@ -1,6 +1,6 @@
 package com.hutuneko.magicscript.api;
 
-import com.hutuneko.magicscript.item.MagicItems;
+import com.hutuneko.magicscript.registy.MagicItems;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
